@@ -139,8 +139,7 @@ async function generateLabs150(strapi) {
       if (existing && existing.length > 0) continue;
 
       await strapi.documents('api::lab.lab').create({
-        data: lab,
-        status: 'published'
+        data: lab
       });
       successCount++;
       if (successCount % 20 === 0) {
