@@ -38,6 +38,19 @@ exports.default = {
                 console.log(`Socket ${socket.id} joined room user_${userId}`);
             });
 
+            // Multiplayer Collaboration Events
+            socket.on("join-lab", (labId) => {
+                socket.join(`lab_${labId}`);
+                console.log(`Socket ${socket.id} joined lab_${labId}`);
+                // Notify others in the lab
+                socket.to(`lab_${labId}`).emit("user-joined", { id: socket.id });
+            });
+
+            socket.on("code-change", (data) => {
+                // data: { labId, code }
+                socket.to(`lab_${data.labId}`).emit("code-update", data.code);
+            });
+
             socket.on("disconnect", () => {
                 console.log("Client disconnected:", socket.id);
             });
