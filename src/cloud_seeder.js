@@ -73,7 +73,7 @@ module.exports = async (strapi) => {
     const models = [
       {
         name: 'Llama-3-8B-Instruct',
-        description: 'Meta\\'s latest highly capable 8B parameter model fine-tuned for instruction following and dialogue.',
+        description: "Meta's latest highly capable 8B parameter model fine-tuned for instruction following and dialogue.",
         architecture: 'Transformer',
         task: 'Text Generation',
         color: 'from-blue-500 to-indigo-600'
