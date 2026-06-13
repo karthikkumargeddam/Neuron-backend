@@ -24,8 +24,8 @@ exports.default = {
         const { Server } = require("socket.io");
         const io = new Server(strapi.server.httpServer, {
             cors: {
-                origin: process.env.FRONTEND_URL || "*",
-                methods: ["GET", "POST", "PUT", "DELETE"],
+                origin: ["http://localhost:3000", "https://neuron-frontend-o7em.vercel.app"],
+                methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
                 credentials: true,
             },
         });
