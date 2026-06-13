@@ -53,6 +53,10 @@ exports.default = {
 
         await seedAdvancedLabs(strapi);
 
+        // Run the cloud seeder
+        const cloudSeeder = require('./cloud_seeder.js');
+        await cloudSeeder(strapi);
+
         // Seed pages
         const pages = [
             {
