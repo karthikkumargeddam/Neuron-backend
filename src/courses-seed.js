@@ -483,20 +483,126 @@ Transformers form the backbone of all modern Large Language Models (LLMs) like G
       {
         title: 'Introduction to Autonomous Agents',
         explanation: `
-## What is Agentic AI?
-Unlike traditional LLMs that only respond to queries in a single-turn chat, an AI agent is an autonomous entity that can perceive its environment, make decisions, and take actions using tools to achieve a specific goal over a multi-step horizon.
+# Introduction to Autonomous Agents
 
-### Key Components of an Agent
-1. **Profile/Persona**: Dictates the agent's behavior and constraints.
-2. **Memory**:
-   - *Short-term*: Context window of the current execution.
-   - *Long-term*: External vector databases used to recall past experiences.
-3. **Planning**: 
-   - *Reflection*: Reviewing past actions to correct mistakes.
-   - *Chain of Thought / ReAct*: Breaking complex goals into smaller sub-tasks.
-4. **Action**: Integrating with external APIs (Tool Use).
+Welcome to the definitive guide on **Autonomous Agents**, the next evolutionary leap in Artificial Intelligence. In this comprehensive tutorial, we will explore the fundamental concepts, architectures, and practical applications of Agentic AI.
 
-In this module, we will explore how shifting from "Prompt Engineering" to "Agent Engineering" is revolutionizing the AI industry.
+## Table of Contents
+1. [What is an AI Agent?](#what-is-an-ai-agent)
+2. [Evolution: From LLMs to Agents](#evolution-from-llms-to-agents)
+3. [Core Architecture of an Agent](#core-architecture-of-an-agent)
+   - [Profile and Persona](#profile-and-persona)
+   - [Memory Systems (Short-term & Long-term)](#memory-systems)
+   - [Planning and Reasoning](#planning-and-reasoning)
+   - [Action and Tool Execution](#action-and-tool-execution)
+4. [The ReAct Framework](#the-react-framework)
+5. [Real-World Applications](#real-world-applications)
+6. [Conclusion](#conclusion)
+
+---
+
+## 1. What is an AI Agent? <a name="what-is-an-ai-agent"></a>
+
+Unlike traditional Large Language Models (LLMs) that function as static question-answering machines, an **AI Agent** is an autonomous entity capable of perceiving its environment, reasoning about complex problems, making independent decisions, and taking concrete actions using external tools to achieve a specific goal over a multi-step horizon.
+
+If an LLM is the "brain", an Agent provides the "hands" (tools), the "hippocampus" (memory), and the "prefrontal cortex" (planning).
+
+> **Definition:** An Autonomous Agent is an AI system that can act independently to achieve a given objective by breaking it down into manageable sub-tasks, executing them iteratively, and adapting its plan based on real-time feedback.
+
+---
+
+## 2. Evolution: From LLMs to Agents <a name="evolution-from-llms-to-agents"></a>
+
+To understand the magnitude of Agentic AI, we must trace its evolution:
+
+| Paradigm | Characteristics | Limitations |
+|----------|-----------------|-------------|
+| **Rule-Based Bots** | Hardcoded if/then rules. | Extremely brittle; zero understanding of natural language. |
+| **Conversational LLMs** | ChatGPT, Claude. Single-turn query/response. | No access to external real-time data; cannot take actions. |
+| **RAG Systems** | LLM + Vector DB. | Can read external knowledge but cannot execute tools or plan multi-step workflows. |
+| **Autonomous Agents** | ReAct, LangChain. | Capable of full autonomy, self-correction, and tool usage. |
+
+---
+
+## 3. Core Architecture of an Agent <a name="core-architecture-of-an-agent"></a>
+
+Modern AI agents are built on four foundational pillars. Let's explore each in deep technical detail.
+
+### 3.1 Profile and Persona <a name="profile-and-persona"></a>
+An agent begins with a system prompt that dictates its **Persona**. This defines its role, constraints, and the tone of its responses.
+
+\`\`\`python
+# Example of defining an Agent Persona
+system_prompt = """
+You are a Senior DevOps Engineer Agent. 
+Your goal is to diagnose and resolve server outages.
+You have access to AWS CLI, Kubernetes tools, and Datadog logs.
+Always verify a service is healthy after restarting it before marking the task complete.
+"""
+\`\`\`
+
+### 3.2 Memory Systems (Short-term & Long-term) <a name="memory-systems"></a>
+An agent must remember what it has done to avoid repeating mistakes or getting stuck in infinite loops.
+
+- **Short-Term Memory**: The in-context learning window (e.g., the 128k token window of GPT-4o). It contains the current conversational thread and the immediate history of executed tool actions.
+- **Long-Term Memory**: Persistent storage (usually a Vector Database like Pinecone or Milvus) where the agent can store key learnings across sessions.
+
+### 3.3 Planning and Reasoning <a name="planning-and-reasoning"></a>
+When given a complex task like "Deploy this Next.js app to AWS," the agent cannot do it in one step. It must use **Task Decomposition**.
+
+#### Self-Reflection
+Advanced agents utilize self-reflection algorithms (like Reflexion). After taking an action, the agent reviews the output and asks itself: *"Did this achieve the intended sub-goal? If not, what went wrong?"*
+
+### 3.4 Action and Tool Execution <a name="action-and-tool-execution"></a>
+This is where the magic happens. Agents interact with the digital world through **Function Calling**. They can browse the web, execute Python code, query databases, or send emails.
+
+---
+
+## 4. The ReAct Framework <a name="the-react-framework"></a>
+
+The **ReAct (Reasoning + Acting)** framework is the most popular mental model for agents. It forces the LLM to output its internal thought process before taking an action.
+
+**The ReAct Loop:**
+1. **Thought**: The agent analyzes the current situation.
+2. **Action**: The agent selects a tool and provides the arguments.
+3. **Observation**: The system executes the tool and returns the raw output to the agent.
+4. *(Repeat until the objective is completed)*
+
+### Example ReAct Trace
+\`\`\`text
+User: How many days until the next US Presidential Election from today?
+
+Thought 1: I need to know today's date, and the date of the next US Presidential Election. I will use the get_current_date tool.
+Action 1: get_current_date()
+Observation 1: 2026-06-14
+
+Thought 2: Now I need to find the exact date of the next US Presidential Election. I will use the search_web tool.
+Action 2: search_web("date of next US Presidential Election")
+Observation 2: The next US Presidential Election will be held on November 7, 2028.
+
+Thought 3: Now I need to calculate the difference in days between June 14, 2026, and November 7, 2028. I will use the run_python_math tool.
+Action 3: run_python_math("from datetime import date; print((date(2028, 11, 7) - date(2026, 6, 14)).days)")
+Observation 3: 877
+
+Thought 4: I have the answer. I will now synthesize the final response to the user.
+Final Answer: There are exactly 877 days until the next US Presidential election on November 7, 2028!
+\`\`\`
+
+---
+
+## 5. Real-World Applications <a name="real-world-applications"></a>
+
+- **Software Engineering (Devin)**: AI Software Engineers that can read a GitHub issue, clone the repo, write the code, run the tests, and open a Pull Request entirely autonomously.
+- **Financial Analysis**: Agents that monitor real-time SEC filings, extract financial sentiment, run proprietary trading algorithms, and execute trades via API.
+- **Cybersecurity**: Automated penetration testing agents that probe networks for vulnerabilities, exploit them in sandboxes, and write remediation reports.
+
+---
+
+## 6. Conclusion <a name="conclusion"></a>
+
+Autonomous agents represent the transition from AI as a *Tool* to AI as a *Worker*. By combining the reasoning capabilities of Large Language Models with infinite tool action spaces, memory, and reflection loops, we are entering an era of unbounded digital automation.
+
+In the next module, we will get our hands dirty and write our very first Agent using Python and the LangChain framework!
         `
       },
       {
