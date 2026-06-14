@@ -481,39 +481,32 @@ Transformers form the backbone of all modern Large Language Models (LLMs) like G
     description: 'Learn to build autonomous AI agents capable of reasoning, planning, and tool use to solve complex workflows.',
     modules: [
       {
-        title: 'Introduction to Autonomous Agents',
+        title: 'What is an AI Agent?',
         explanation: `
-# Introduction to Autonomous Agents
-
-Welcome to the definitive guide on **Autonomous Agents**, the next evolutionary leap in Artificial Intelligence. In this comprehensive tutorial, we will explore the fundamental concepts, architectures, and practical applications of Agentic AI.
-
-## Table of Contents
-1. [What is an AI Agent?](#what-is-an-ai-agent)
-2. [Evolution: From LLMs to Agents](#evolution-from-llms-to-agents)
-3. [Core Architecture of an Agent](#core-architecture-of-an-agent)
-   - [Profile and Persona](#profile-and-persona)
-   - [Memory Systems (Short-term & Long-term)](#memory-systems)
-   - [Planning and Reasoning](#planning-and-reasoning)
-   - [Action and Tool Execution](#action-and-tool-execution)
-4. [The ReAct Framework](#the-react-framework)
-5. [Real-World Applications](#real-world-applications)
-6. [Conclusion](#conclusion)
-
----
-
-## 1. What is an AI Agent? <a name="what-is-an-ai-agent"></a>
+# What is an AI Agent?
 
 Unlike traditional Large Language Models (LLMs) that function as static question-answering machines, an **AI Agent** is an autonomous entity capable of perceiving its environment, reasoning about complex problems, making independent decisions, and taking concrete actions using external tools to achieve a specific goal over a multi-step horizon.
 
-If an LLM is the "brain", an Agent provides the "hands" (tools), the "hippocampus" (memory), and the "prefrontal cortex" (planning).
+## The Cognitive Architecture
+
+If an LLM is the "brain", an Agent provides the "hands" (tools), the "hippocampus" (memory), and the "prefrontal cortex" (planning). 
 
 > **Definition:** An Autonomous Agent is an AI system that can act independently to achieve a given objective by breaking it down into manageable sub-tasks, executing them iteratively, and adapting its plan based on real-time feedback.
 
----
+### Key Capabilities
+- **Perception:** Reading API outputs, web pages, or vision models to understand the current state.
+- **Decision Making:** Evaluating multiple potential actions and choosing the one that maximizes the probability of success.
+- **Action:** Interacting with the digital environment through APIs, DOM manipulation, or CLI commands.
+        `
+      },
+      {
+        title: 'Evolution: From LLMs to Agents',
+        explanation: `
+# Evolution: From LLMs to Agents
 
-## 2. Evolution: From LLMs to Agents <a name="evolution-from-llms-to-agents"></a>
+To understand the magnitude of Agentic AI, we must trace its evolution from simple hardcoded scripts to fully autonomous entities.
 
-To understand the magnitude of Agentic AI, we must trace its evolution:
+## The AI Paradigm Shift
 
 | Paradigm | Characteristics | Limitations |
 |----------|-----------------|-------------|
@@ -522,13 +515,18 @@ To understand the magnitude of Agentic AI, we must trace its evolution:
 | **RAG Systems** | LLM + Vector DB. | Can read external knowledge but cannot execute tools or plan multi-step workflows. |
 | **Autonomous Agents** | ReAct, LangChain. | Capable of full autonomy, self-correction, and tool usage. |
 
----
+### Why LLMs are not enough
+An LLM alone suffers from hallucinations and knowledge cut-offs. By placing the LLM inside an Agentic loop, it can verify its own claims by calling a \`search_web\` tool, effectively grounding its responses in real-time reality.
+        `
+      },
+      {
+        title: 'Core Architecture of an Agent',
+        explanation: `
+# Core Architecture of an Agent
 
-## 3. Core Architecture of an Agent <a name="core-architecture-of-an-agent"></a>
+Modern AI agents are built on four foundational pillars.
 
-Modern AI agents are built on four foundational pillars. Let's explore each in deep technical detail.
-
-### 3.1 Profile and Persona <a name="profile-and-persona"></a>
+## 1. Profile and Persona
 An agent begins with a system prompt that dictates its **Persona**. This defines its role, constraints, and the tone of its responses.
 
 \`\`\`python
@@ -541,28 +539,27 @@ Always verify a service is healthy after restarting it before marking the task c
 """
 \`\`\`
 
-### 3.2 Memory Systems (Short-term & Long-term) <a name="memory-systems"></a>
+## 2. Memory Systems (Short-term & Long-term)
 An agent must remember what it has done to avoid repeating mistakes or getting stuck in infinite loops.
 
 - **Short-Term Memory**: The in-context learning window (e.g., the 128k token window of GPT-4o). It contains the current conversational thread and the immediate history of executed tool actions.
 - **Long-Term Memory**: Persistent storage (usually a Vector Database like Pinecone or Milvus) where the agent can store key learnings across sessions.
 
-### 3.3 Planning and Reasoning <a name="planning-and-reasoning"></a>
-When given a complex task like "Deploy this Next.js app to AWS," the agent cannot do it in one step. It must use **Task Decomposition**.
+## 3. Planning and Reasoning
+When given a complex task like "Deploy this Next.js app to AWS," the agent cannot do it in one step. It must use **Task Decomposition**. Advanced agents utilize self-reflection algorithms (like Reflexion). After taking an action, the agent reviews the output and asks itself: *"Did this achieve the intended sub-goal? If not, what went wrong?"*
 
-#### Self-Reflection
-Advanced agents utilize self-reflection algorithms (like Reflexion). After taking an action, the agent reviews the output and asks itself: *"Did this achieve the intended sub-goal? If not, what went wrong?"*
-
-### 3.4 Action and Tool Execution <a name="action-and-tool-execution"></a>
+## 4. Action and Tool Execution
 This is where the magic happens. Agents interact with the digital world through **Function Calling**. They can browse the web, execute Python code, query databases, or send emails.
-
----
-
-## 4. The ReAct Framework <a name="the-react-framework"></a>
+        `
+      },
+      {
+        title: 'The ReAct Framework',
+        explanation: `
+# The ReAct Framework
 
 The **ReAct (Reasoning + Acting)** framework is the most popular mental model for agents. It forces the LLM to output its internal thought process before taking an action.
 
-**The ReAct Loop:**
+## The ReAct Loop
 1. **Thought**: The agent analyzes the current situation.
 2. **Action**: The agent selects a tool and provides the arguments.
 3. **Observation**: The system executes the tool and returns the raw output to the agent.
@@ -587,74 +584,38 @@ Observation 3: 877
 Thought 4: I have the answer. I will now synthesize the final response to the user.
 Final Answer: There are exactly 877 days until the next US Presidential election on November 7, 2028!
 \`\`\`
-
----
-
-## 5. Real-World Applications <a name="real-world-applications"></a>
-
-- **Software Engineering (Devin)**: AI Software Engineers that can read a GitHub issue, clone the repo, write the code, run the tests, and open a Pull Request entirely autonomously.
-- **Financial Analysis**: Agents that monitor real-time SEC filings, extract financial sentiment, run proprietary trading algorithms, and execute trades via API.
-- **Cybersecurity**: Automated penetration testing agents that probe networks for vulnerabilities, exploit them in sandboxes, and write remediation reports.
-
----
-
-## 6. Conclusion <a name="conclusion"></a>
-
-Autonomous agents represent the transition from AI as a *Tool* to AI as a *Worker*. By combining the reasoning capabilities of Large Language Models with infinite tool action spaces, memory, and reflection loops, we are entering an era of unbounded digital automation.
-
-In the next module, we will get our hands dirty and write our very first Agent using Python and the LangChain framework!
         `
       },
       {
-        title: 'Tool Use and Function Calling',
+        title: 'Real-World Applications',
         explanation: `
-## Function Calling in Modern LLMs
-Modern LLMs like GPT-4, Claude 3, and Gemini 1.5 Pro are fine-tuned to recognize when they need to call an external function and output a structured JSON payload rather than text.
+# Real-World Applications
 
-### How Tool Use Works
-1. **Definition**: The developer provides a JSON Schema defining the tools available (e.g., \`search_web\`, \`read_file\`, \`run_python_code\`).
-2. **Inference**: The model realizes it cannot answer the user's question with its internal knowledge and decides to call \`search_web\`.
-3. **Execution**: The application intercepts the model's request, executes the actual code (e.g., a Google Search API), and returns the result back to the model.
-4. **Synthesis**: The model reads the execution result and generates a final human-readable answer.
+Agents are moving rapidly from research labs into enterprise production environments. Here are a few ways Agentic AI is transforming industries today:
 
-\`\`\`python
-# Example of defining a tool in OpenAI API
-tools = [
-  {
-    "type": "function",
-    "function": {
-      "name": "get_weather",
-      "description": "Get current weather in a given location",
-      "parameters": {
-        "type": "object",
-        "properties": {
-          "location": {"type": "string", "description": "City name"}
-        },
-        "required": ["location"]
-      }
-    }
-  }
-]
-\`\`\`
+## 1. Software Engineering
+**Autonomous Coding Assistants (like Devin)** are AI Software Engineers that can read a GitHub issue, clone the repository, write the code to fix the bug, run unit tests to verify the fix, and open a Pull Request entirely autonomously. They use CLI tools and code editors just like human engineers.
+
+## 2. Financial Analysis
+Hedge funds are deploying agents that monitor real-time SEC filings and news streams. These agents extract financial sentiment, run proprietary trading algorithms, and execute trades via brokerage APIs—all within milliseconds of breaking news.
+
+## 3. Cybersecurity
+Automated penetration testing agents are revolutionizing security. Instead of human red teams, an agent is deployed into a network where it autonomously probes for vulnerabilities, exploits them in secure sandboxes, and writes detailed remediation reports for the blue team.
+
+## 4. Customer Support
+Next-generation support agents don't just answer FAQs. If a user asks "Cancel my order", the agent actually uses internal API tools to look up the order in Shopify, process the refund in Stripe, and send the cancellation email autonomously.
         `
       },
       {
-        title: 'Multi-Agent Orchestration',
+        title: 'Conclusion',
         explanation: `
-## Orchestrating Multiple Agents
-Why use one agent when you can have an entire team of specialists? Multi-agent orchestration frameworks like **LangGraph**, **CrewAI**, and **Autogen** allow you to create specialized agents that collaborate.
+# Conclusion
 
-### Frameworks Overview
-- **LangGraph**: Models agent workflows as graphs (nodes and edges), allowing for cyclic execution and state management. Great for creating loops where an agent criticizes and revises its own code.
-- **CrewAI**: Treats agents like a corporate team. You define roles (e.g., "Senior Researcher", "Lead Writer") and tasks, and the agents pass work sequentially to each other.
+Autonomous agents represent the transition from AI as a *Tool* to AI as a *Worker*. 
 
-### Designing a Multi-Agent System
-Consider a software development workflow:
-1. **Product Manager Agent**: Writes the specification.
-2. **Developer Agent**: Writes the code.
-3. **QA Agent**: Runs tests and reviews the code.
+By combining the reasoning capabilities of Large Language Models with infinite tool action spaces, memory, and reflection loops, we are entering an era of unbounded digital automation.
 
-If the QA Agent finds a bug, it sends the code *back* to the Developer Agent, creating a cyclic execution graph until the tests pass!
+In the next sections of your learning journey, you will get your hands dirty and write your very first Agent using Python and the LangChain framework. Welcome to the Agentic Era!
         `
       }
     ]
