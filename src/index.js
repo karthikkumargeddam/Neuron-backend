@@ -58,6 +58,22 @@ exports.default = {
 
         strapi.io = io; // Attach to strapi instance to use in services/controllers
 
+        // Initialize Yjs WebSocket Server
+        const { WebSocketServer } = require('ws');
+        const { setupWSConnection } = require('y-websocket/bin/utils');
+
+        const wss = new WebSocketServer({ noServer: true });
+
+        strapi.server.httpServer.on('upgrade', (request, socket, head) => {
+            if (request.url.startsWith('/yjs')) {
+                wss.handleUpgrade(request, socket, head, (ws) => {
+                    wss.emit('connection', ws, request);
+                });
+            }
+        });
+
+        wss.on('connection', setupWSConnection);
+
         // FORCE SEED RE-RUN
         await generateLabs150(strapi);
         console.log("\n=======================================================");
