@@ -473,5 +473,41 @@ Transformers form the backbone of all modern Large Language Models (LLMs) like G
         `
       }
     ]
+  },
+  {
+    title: 'Agentic AI',
+    uuid: 'agentic-ai',
+    level: 'PhD',
+    description: 'Learn to build autonomous AI agents capable of reasoning, planning, and tool use to solve complex workflows.',
+    modules: [
+      {
+        title: 'Introduction to Autonomous Agents',
+        explanation: '## What is Agentic AI?\nUnlike traditional LLMs that only respond to queries, an AI agent is an autonomous entity that can perceive its environment, make decisions, and take actions using tools to achieve a specific goal.\n\nKey components include **Planning**, **Memory**, and **Tool Use**.'
+      }
+    ]
+  },
+  {
+    title: 'Gen AI',
+    uuid: 'gen-ai',
+    level: 'M.Tech',
+    description: 'Master Large Language Models (LLMs), RAG pipelines, fine-tuning, and advanced prompt engineering.',
+    modules: [
+      {
+        title: 'Retrieval-Augmented Generation (RAG)',
+        explanation: '## RAG Pipelines\nRetrieval-Augmented Generation (RAG) is a technique that grounds LLM responses on external knowledge bases.\n\nBy embedding documents into a vector database, the agent can retrieve the most relevant context and pass it to the language model to prevent hallucinations.'
+      }
+    ]
+  },
+  {
+    title: 'Forward deployment engineer(FDE)',
+    uuid: 'forward-deployment-engineer-fde',
+    level: 'B.Tech',
+    description: 'Bridge the gap between product and customer. Learn solution architecture, cloud deployment, and technical consulting.',
+    modules: [
+      {
+        title: 'Solution Architecture & Deployment',
+        explanation: '## The Role of an FDE\nForward Deployed Engineers sit at the intersection of software engineering and customer success. You are the technical vanguard, embedding directly with clients to solve their hardest data problems using your company\'s platform.'
+      }
+    ]
   }
 ];
