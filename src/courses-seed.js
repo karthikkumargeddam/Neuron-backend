@@ -475,13 +475,13 @@ Transformers form the backbone of all modern Large Language Models (LLMs) like G
     ]
   },
   {
-    title: 'Agentic AI',
-    uuid: 'agentic-ai',
+    title: 'What is an AI Agent?',
+    uuid: 'what-is-an-ai-agent',
     level: 'PhD',
-    description: 'Learn to build autonomous AI agents capable of reasoning, planning, and tool use to solve complex workflows.',
+    description: 'Learn the fundamental cognitive architecture of an autonomous AI entity.',
     modules: [
       {
-        title: 'What is an AI Agent?',
+        title: 'Introduction to Agents',
         explanation: `
 # What is an AI Agent?
 
@@ -500,7 +500,19 @@ If an LLM is the "brain", an Agent provides the "hands" (tools), the "hippocampu
         `
       },
       {
-        title: 'Evolution: From LLMs to Agents',
+        title: 'Premium Implementation Guide',
+        explanation: '## Advanced Implementation\n\nThis content explores the exact python code required to initialize your first AI Agent.'
+      }
+    ]
+  },
+  {
+    title: 'Evolution: From LLMs to Agents',
+    uuid: 'evolution-llms-agents',
+    level: 'PhD',
+    description: 'Trace the paradigm shift from static rule-based bots to autonomous multi-step reasoning models.',
+    modules: [
+      {
+        title: 'The AI Paradigm Shift',
         explanation: `
 # Evolution: From LLMs to Agents
 
@@ -520,7 +532,19 @@ An LLM alone suffers from hallucinations and knowledge cut-offs. By placing the 
         `
       },
       {
-        title: 'Core Architecture of an Agent',
+        title: 'Interactive RAG vs Agent Sandbox',
+        explanation: '## Interactive Comparison\n\nUse this premium sandbox to build both a RAG and an Agent.'
+      }
+    ]
+  },
+  {
+    title: 'Core Architecture of an Agent',
+    uuid: 'core-architecture-agent',
+    level: 'PhD',
+    description: 'Deep dive into Profile, Persona, Memory, Planning, and Tool Execution loops.',
+    modules: [
+      {
+        title: 'Foundational Pillars',
         explanation: `
 # Core Architecture of an Agent
 
@@ -553,7 +577,19 @@ This is where the magic happens. Agents interact with the digital world through 
         `
       },
       {
-        title: 'The ReAct Framework',
+        title: 'Building Long-Term Memory (Pinecone)',
+        explanation: '## Connecting Vector Databases\n\nLearn how to construct a robust long-term memory system.'
+      }
+    ]
+  },
+  {
+    title: 'The ReAct Framework',
+    uuid: 'react-framework',
+    level: 'PhD',
+    description: 'Learn how to force LLMs to output internal thoughts before taking execution paths.',
+    modules: [
+      {
+        title: 'Reasoning + Acting',
         explanation: `
 # The ReAct Framework
 
@@ -587,7 +623,19 @@ Final Answer: There are exactly 877 days until the next US Presidential election
         `
       },
       {
-        title: 'Real-World Applications',
+        title: 'Write a Custom ReAct Loop from Scratch',
+        explanation: '## Building ReAct in Python\n\nThis premium module walks through the from-scratch implementation of the reasoning cycle.'
+      }
+    ]
+  },
+  {
+    title: 'Real-World Applications',
+    uuid: 'real-world-applications',
+    level: 'PhD',
+    description: 'Discover how agents are autonomously solving tasks in SWE, Finance, and Cybersecurity.',
+    modules: [
+      {
+        title: 'Agentic Transformations',
         explanation: `
 # Real-World Applications
 
@@ -607,7 +655,19 @@ Next-generation support agents don't just answer FAQs. If a user asks "Cancel my
         `
       },
       {
-        title: 'Conclusion',
+        title: 'Enterprise Case Studies',
+        explanation: '## Detailed Case Studies\n\nDeep dive into exact architecture diagrams of deployed enterprise agents.'
+      }
+    ]
+  },
+  {
+    title: 'Agentic AI Conclusion',
+    uuid: 'agentic-ai-conclusion',
+    level: 'PhD',
+    description: 'The future of AI as a worker rather than a tool.',
+    modules: [
+      {
+        title: 'The Agentic Era',
         explanation: `
 # Conclusion
 
@@ -617,6 +677,10 @@ By combining the reasoning capabilities of Large Language Models with infinite t
 
 In the next sections of your learning journey, you will get your hands dirty and write your very first Agent using Python and the LangChain framework. Welcome to the Agentic Era!
         `
+      },
+      {
+        title: 'Final Exam & Certification',
+        explanation: '## Final Exam\n\nPass this premium exam to receive your Agentic AI Engineer certification.'
       }
     ]
   },
