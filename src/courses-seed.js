@@ -482,7 +482,74 @@ Transformers form the backbone of all modern Large Language Models (LLMs) like G
     modules: [
       {
         title: 'Introduction to Autonomous Agents',
-        explanation: '## What is Agentic AI?\nUnlike traditional LLMs that only respond to queries, an AI agent is an autonomous entity that can perceive its environment, make decisions, and take actions using tools to achieve a specific goal.\n\nKey components include **Planning**, **Memory**, and **Tool Use**.'
+        explanation: `
+## What is Agentic AI?
+Unlike traditional LLMs that only respond to queries in a single-turn chat, an AI agent is an autonomous entity that can perceive its environment, make decisions, and take actions using tools to achieve a specific goal over a multi-step horizon.
+
+### Key Components of an Agent
+1. **Profile/Persona**: Dictates the agent's behavior and constraints.
+2. **Memory**:
+   - *Short-term*: Context window of the current execution.
+   - *Long-term*: External vector databases used to recall past experiences.
+3. **Planning**: 
+   - *Reflection*: Reviewing past actions to correct mistakes.
+   - *Chain of Thought / ReAct*: Breaking complex goals into smaller sub-tasks.
+4. **Action**: Integrating with external APIs (Tool Use).
+
+In this module, we will explore how shifting from "Prompt Engineering" to "Agent Engineering" is revolutionizing the AI industry.
+        `
+      },
+      {
+        title: 'Tool Use and Function Calling',
+        explanation: `
+## Function Calling in Modern LLMs
+Modern LLMs like GPT-4, Claude 3, and Gemini 1.5 Pro are fine-tuned to recognize when they need to call an external function and output a structured JSON payload rather than text.
+
+### How Tool Use Works
+1. **Definition**: The developer provides a JSON Schema defining the tools available (e.g., \`search_web\`, \`read_file\`, \`run_python_code\`).
+2. **Inference**: The model realizes it cannot answer the user's question with its internal knowledge and decides to call \`search_web\`.
+3. **Execution**: The application intercepts the model's request, executes the actual code (e.g., a Google Search API), and returns the result back to the model.
+4. **Synthesis**: The model reads the execution result and generates a final human-readable answer.
+
+\`\`\`python
+# Example of defining a tool in OpenAI API
+tools = [
+  {
+    "type": "function",
+    "function": {
+      "name": "get_weather",
+      "description": "Get current weather in a given location",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "location": {"type": "string", "description": "City name"}
+        },
+        "required": ["location"]
+      }
+    }
+  }
+]
+\`\`\`
+        `
+      },
+      {
+        title: 'Multi-Agent Orchestration',
+        explanation: `
+## Orchestrating Multiple Agents
+Why use one agent when you can have an entire team of specialists? Multi-agent orchestration frameworks like **LangGraph**, **CrewAI**, and **Autogen** allow you to create specialized agents that collaborate.
+
+### Frameworks Overview
+- **LangGraph**: Models agent workflows as graphs (nodes and edges), allowing for cyclic execution and state management. Great for creating loops where an agent criticizes and revises its own code.
+- **CrewAI**: Treats agents like a corporate team. You define roles (e.g., "Senior Researcher", "Lead Writer") and tasks, and the agents pass work sequentially to each other.
+
+### Designing a Multi-Agent System
+Consider a software development workflow:
+1. **Product Manager Agent**: Writes the specification.
+2. **Developer Agent**: Writes the code.
+3. **QA Agent**: Runs tests and reviews the code.
+
+If the QA Agent finds a bug, it sends the code *back* to the Developer Agent, creating a cyclic execution graph until the tests pass!
+        `
       }
     ]
   },
@@ -493,8 +560,70 @@ Transformers form the backbone of all modern Large Language Models (LLMs) like G
     description: 'Master Large Language Models (LLMs), RAG pipelines, fine-tuning, and advanced prompt engineering.',
     modules: [
       {
+        title: 'LLM Architectures & Transformers',
+        explanation: `
+## The Transformer Revolution
+Introduced by Google in the 2017 paper "Attention Is All You Need", the Transformer architecture fundamentally changed Natural Language Processing. It discarded Recurrent Neural Networks (RNNs) in favor of the **Self-Attention Mechanism**.
+
+### Self-Attention
+Self-attention allows the model to look at other words in the input sequence to gain a better understanding of a specific word's context.
+
+For example, in the sentence:
+> "The animal didn't cross the street because **it** was too tired."
+
+The self-attention mechanism assigns a high weight between the word "it" and "animal".
+
+### Encoder vs Decoder
+- **Encoder-Only (BERT)**: Great for classification and understanding tasks.
+- **Decoder-Only (GPT series)**: Auto-regressive models optimized for generating text one token at a time.
+- **Encoder-Decoder (T5)**: Good for translation and summarization.
+        `
+      },
+      {
         title: 'Retrieval-Augmented Generation (RAG)',
-        explanation: '## RAG Pipelines\nRetrieval-Augmented Generation (RAG) is a technique that grounds LLM responses on external knowledge bases.\n\nBy embedding documents into a vector database, the agent can retrieve the most relevant context and pass it to the language model to prevent hallucinations.'
+        explanation: `
+## Overcoming LLM Hallucinations
+LLMs suffer from two major problems:
+1. **Knowledge Cutoff**: They don't know about events that happened after they were trained.
+2. **Hallucinations**: They confidently make up facts when they don't know the answer.
+
+**Retrieval-Augmented Generation (RAG)** solves this by retrieving relevant context from a database and injecting it into the prompt.
+
+### The RAG Pipeline
+1. **Ingestion**: Split large documents into smaller chunks (e.g., 500 tokens).
+2. **Embedding**: Pass chunks through an embedding model (like \`text-embedding-3-small\`) to convert them into dense vectors.
+3. **Storage**: Store the vectors in a Vector Database (e.g., Pinecone, Milvus, pgvector).
+4. **Retrieval**: When a user asks a query, embed the query, perform a Cosine Similarity search in the vector DB, and retrieve the top-K chunks.
+5. **Generation**: Send the original query *plus* the retrieved chunks to the LLM to generate a grounded answer.
+
+\`\`\`python
+# Simple RAG Prompt Template
+prompt = f"""
+Use the following context to answer the user's question. If the answer is not in the context, say "I don't know".
+
+Context:
+{retrieved_chunks}
+
+Question:
+{user_query}
+"""
+\`\`\`
+        `
+      },
+      {
+        title: 'Parameter-Efficient Fine-Tuning (PEFT)',
+        explanation: `
+## Why Fine-Tune?
+While Prompt Engineering and RAG are powerful, sometimes you need the model to adopt a specific tone, format, or highly specialized domain knowledge (like medical jargon or specific coding languages).
+
+Full fine-tuning of a 70B parameter model requires massive compute clusters.
+
+### LoRA (Low-Rank Adaptation)
+LoRA freezes the pre-trained model weights and injects trainable rank decomposition matrices into each layer of the Transformer architecture. This drastically reduces the number of trainable parameters by up to 10,000 times!
+
+### QLoRA (Quantized LoRA)
+QLoRA takes this a step further by quantizing the base model weights to 4-bit precision. This allows you to fine-tune a massive 70B parameter model on a single consumer GPU (like an RTX 3090 or A100)!
+        `
       }
     ]
   },
@@ -505,8 +634,58 @@ Transformers form the backbone of all modern Large Language Models (LLMs) like G
     description: 'Bridge the gap between product and customer. Learn solution architecture, cloud deployment, and technical consulting.',
     modules: [
       {
-        title: 'Solution Architecture & Deployment',
-        explanation: '## The Role of an FDE\nForward Deployed Engineers sit at the intersection of software engineering and customer success. You are the technical vanguard, embedding directly with clients to solve their hardest data problems using your company\'s platform.'
+        title: 'The FDE Role & Solution Architecture',
+        explanation: `
+## What is a Forward Deployed Engineer?
+Forward Deployed Engineers (FDEs)—sometimes called Field Engineers or Solutions Architects—sit at the intersection of software engineering and customer success. You are the technical vanguard of the company.
+
+While traditional software engineers build the core platform, an FDE embeds directly with the client to implement, customize, and deploy that platform to solve the client's specific business problems.
+
+### Core Responsibilities
+- **Discovery**: Leading technical scoping sessions with clients to understand their data silos and pain points.
+- **Prototyping**: Building rapid Proof of Concepts (PoCs) to demonstrate value within weeks, not months.
+- **Integration**: Writing custom scripts, data pipelines, and API integrations connecting the client's legacy systems to your modern platform.
+
+### The Mindset
+An FDE must be aggressively pragmatic. You aren't writing code that needs to survive for 10 years; you are writing code that delivers multi-million dollar business value *today*.
+        `
+      },
+      {
+        title: 'Enterprise Cloud Deployment',
+        explanation: `
+## Navigating Enterprise Environments
+Unlike deploying to a startup's clean AWS account, deploying enterprise software involves navigating complex security requirements, VPNs, proxies, and air-gapped environments.
+
+### Key Deployment Technologies
+As an FDE, you must be a master of DevOps tools to deploy software anywhere.
+
+1. **Docker**: Containerizing applications to ensure they run identically on a developer's laptop and an enterprise's bare-metal server.
+2. **Kubernetes (K8s)**: Orchestrating those containers. You must know how to write Helm charts to deploy complex microservices architectures.
+3. **Terraform**: Infrastructure as Code (IaC) to quickly spin up required cloud resources (VPCs, RDS instances, S3 buckets) on AWS, Azure, or GCP.
+
+### Security and Compliance
+You will frequently interact with Chief Information Security Officers (CISOs). You must understand:
+- **SOC 2 and HIPAA compliance**
+- **Role-Based Access Control (RBAC)**
+- **Encryption at rest and in transit (TLS/SSL)**
+        `
+      },
+      {
+        title: 'Stakeholder Management & Escalations',
+        explanation: `
+## The Human Element
+The hardest part of being an FDE is not the technology—it's the people. You are often deployed to environments where internal IT teams may feel threatened by your software, or executives have unrealistic expectations.
+
+### Effective Communication
+- **Executive Summaries**: When speaking to a VP or C-Level executive, lead with the business impact. They do not care about the Kubernetes ingress controller; they care that the new pipeline saves 40 hours of manual work per week.
+- **Technical Deep-Dives**: When speaking to the client's engineering team, demonstrate deep technical competence to earn their respect and cooperation.
+
+### Handling Escalations
+When things go wrong in production (and they will), an FDE must:
+1. **Acknowledge the issue immediately** to build trust.
+2. **Triage and mitigate** the problem to stop the bleeding.
+3. **Communicate the RCA (Root Cause Analysis)** transparently once the issue is resolved.
+        `
       }
     ]
   }
