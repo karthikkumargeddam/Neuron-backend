@@ -1,0 +1,47 @@
+{
+  "kind": "collectionType",
+  "collectionName": "model_registries",
+  "info": {
+    "singularName": "model-registry",
+    "pluralName": "model-registries",
+    "displayName": "Model Registry"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "framework": {
+      "type": "string",
+      "required": true
+    },
+    "architecture": {
+      "type": "string"
+    },
+    "downloads": {
+      "type": "integer",
+      "default": 0
+    },
+    "likes": {
+      "type": "integer",
+      "default": 0
+    },
+    "isPublic": {
+      "type": "boolean",
+      "default": true
+    },
+    "author": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user"
+    }
+  }
+}

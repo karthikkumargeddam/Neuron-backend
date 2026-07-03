@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "interview_results",
+  "info": {
+    "singularName": "interview-result",
+    "pluralName": "interview-results",
+    "displayName": "Interview Result"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "userEmail": {
+      "type": "string",
+      "required": true
+    },
+    "topic": {
+      "type": "string",
+      "required": true
+    },
+    "score": {
+      "type": "integer"
+    },
+    "feedback": {
+      "type": "text"
+    },
+    "transcript": {
+      "type": "json"
+    }
+  }
+}

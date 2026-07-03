@@ -3,11 +3,24 @@
 const config = [
     'strapi::logger',
     'strapi::errors',
-    'strapi::security',
+    {
+      name: 'strapi::security',
+      config: {
+        contentSecurityPolicy: {
+          useDefaults: true,
+          directives: {
+            'connect-src': ["'self'", 'https:', 'http:'],
+            'img-src': ["'self'", 'data:', 'blob:', 'res.cloudinary.com', 'images.unsplash.com'],
+            'media-src': ["'self'", 'data:', 'blob:', 'res.cloudinary.com'],
+            upgradeInsecureRequests: null,
+          },
+        },
+      },
+    },
     {
       name: 'strapi::cors',
       config: {
-        origin: ['http://localhost:3000', 'https://neuronlabs.online', '*'],
+        origin: ['http://localhost:3000', 'https://neuronlabs.online'],
         methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
         headers: ['Content-Type', 'Authorization', 'Origin', 'Accept'],
         keepHeaderOnError: true,

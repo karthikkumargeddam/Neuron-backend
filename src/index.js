@@ -86,6 +86,10 @@ exports.default = {
         const cloudSeeder = require('./cloud_seeder.js');
         await cloudSeeder(strapi);
 
+        // Run the AI content seeder
+        const aiSeeder = require('./seed_ai.js');
+        await aiSeeder(strapi);
+
         // Seed pages
         const pages = [
             {
@@ -254,6 +258,18 @@ exports.default = {
                         data: { action: 'api::contact.contact.create', role: publicRole.id }
                     });
                     console.log(`Granted public create permission for Contact API`);
+                }
+            }
+            // Ensure public create access for interview-results
+            if (publicRole) {
+                const interviewPermission = await strapi.db.query('plugin::users-permissions.permission').findOne({
+                    where: { action: 'api::interview-result.interview-result.create', role: publicRole.id }
+                });
+                if (!interviewPermission) {
+                    await strapi.db.query('plugin::users-permissions.permission').create({
+                        data: { action: 'api::interview-result.interview-result.create', role: publicRole.id }
+                    });
+                    console.log(`Granted public create permission for Interview Results API`);
                 }
             }
         } catch (e) {

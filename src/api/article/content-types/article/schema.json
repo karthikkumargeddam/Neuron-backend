@@ -21,6 +21,10 @@
     },
     "cover_image": {
       "type": "string"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title"
     }
   }
 }

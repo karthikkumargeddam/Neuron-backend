@@ -16,6 +16,7 @@
     "difficulty": { "type": "enumeration", "enum": ["Easy", "Medium", "Hard", "Expert"], "default": "Medium" },
     "bounty_points": { "type": "integer", "default": 100 },
     "template_code": { "type": "text" },
-    "expected_output": { "type": "text" }
+    "expected_output": { "type": "text" },
+    "test_cases": { "type": "json" }
   }
 }

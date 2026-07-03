@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "research_papers",
+  "info": {
+    "singularName": "research-paper",
+    "pluralName": "research-papers",
+    "displayName": "Research Paper"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "abstract": {
+      "type": "text",
+      "required": true
+    },
+    "authors": {
+      "type": "string",
+      "required": true
+    },
+    "arxivId": {
+      "type": "string",
+      "required": true
+    },
+    "pdfUrl": {
+      "type": "string",
+      "required": true
+    },
+    "publishedDate": {
+      "type": "date"
+    }
+  }
+}

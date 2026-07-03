@@ -92,6 +92,10 @@
       "relation": "oneToMany",
       "target": "api::transaction.transaction",
       "mappedBy": "user"
+    },
+    "hasUsedTrial": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

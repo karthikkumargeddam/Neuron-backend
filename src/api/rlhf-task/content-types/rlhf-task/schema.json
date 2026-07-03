@@ -1,0 +1,47 @@
+{
+  "kind": "collectionType",
+  "collectionName": "rlhf_tasks",
+  "info": {
+    "singularName": "rlhf-task",
+    "pluralName": "rlhf-tasks",
+    "displayName": "RLHF Task"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "datasetType": {
+      "type": "string"
+    },
+    "rewardPoints": {
+      "type": "integer",
+      "default": 10
+    },
+    "prompt": {
+      "type": "text"
+    },
+    "modelA_output": {
+      "type": "text"
+    },
+    "modelB_output": {
+      "type": "text"
+    },
+    "chosenModel": {
+      "type": "string"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user"
+    }
+  }
+}

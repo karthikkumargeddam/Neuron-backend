@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "compute_hosts",
+  "info": {
+    "singularName": "compute-host",
+    "pluralName": "compute-hosts",
+    "displayName": "Compute Host"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "gpuType": {
+      "type": "string",
+      "required": true
+    },
+    "vram": {
+      "type": "integer",
+      "required": true
+    },
+    "ram": {
+      "type": "integer",
+      "required": true
+    },
+    "hourlyRate": {
+      "type": "decimal",
+      "required": true
+    },
+    "isAvailable": {
+      "type": "boolean",
+      "default": true
+    },
+    "ipAddress": {
+      "type": "string"
+    },
+    "hostUser": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user"
+    }
+  }
+}
