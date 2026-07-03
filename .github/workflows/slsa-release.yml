@@ -1,0 +1,75 @@
+name: SLSA Build & Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  build:
+    name: Build Backend Artifact
+    outputs:
+      hashes: ${{ steps.hash.outputs.hashes }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps || npm install --legacy-peer-deps
+        
+      - name: Build Strapi Application
+        run: npm run build
+        
+      - name: Compress Build Artifact
+        id: archive
+        run: |
+          tar -czf neuron-backend.tar.gz config/ database/ public/ src/ package.json package-lock.json
+          
+      - name: Generate Artifact Hash
+        id: hash
+        run: |
+          echo "hashes=$(sha256sum neuron-backend.tar.gz | base64 -w0)" >> "$GITHUB_OUTPUT"
+          
+      - name: Upload Build Artifact to Workflow
+        uses: actions/upload-artifact@v4
+        with:
+          name: neuron-backend
+          path: neuron-backend.tar.gz
+          if-no-files-found: error
+
+  provenance:
+    needs: [build]
+    permissions:
+      actions: read
+      id-token: write
+      contents: write
+    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v2.0.0
+    with:
+      base64-subjects: "${{ needs.build.outputs.hashes }}"
+      upload-assets: true
+
+  release:
+    needs: [build, provenance]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: neuron-backend
+          
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            neuron-backend.tar.gz
