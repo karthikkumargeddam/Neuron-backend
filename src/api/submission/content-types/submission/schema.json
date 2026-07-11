@@ -13,7 +13,8 @@
     "bounty": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::bounty.bounty"
+      "target": "api::bounty.bounty",
+      "inversedBy": "submissions"
     },
     "user": {
       "type": "string"

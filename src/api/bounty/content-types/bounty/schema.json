@@ -27,6 +27,12 @@
         "completed"
       ],
       "default": "open"
+    },
+    "submissions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::submission.submission",
+      "mappedBy": "bounty"
     }
   }
 }

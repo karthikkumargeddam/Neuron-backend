@@ -19,12 +19,11 @@
     "author": {
       "type": "string"
     },
+    "published_at": {
+      "type": "datetime"
+    },
     "cover_image": {
       "type": "string"
-    },
-    "slug": {
-      "type": "uid",
-      "targetField": "title"
     }
   }
 }

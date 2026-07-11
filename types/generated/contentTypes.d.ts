@@ -540,8 +540,8 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
       'api::article.article'
     > &
       Schema.Attribute.Private;
+    published_at: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
-    slug: Schema.Attribute.UID<'title'>;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -635,6 +635,10 @@ export interface ApiBountyBounty extends Struct.CollectionTypeSchema {
     reward_amount: Schema.Attribute.Decimal;
     status: Schema.Attribute.Enumeration<['open', 'in_progress', 'completed']> &
       Schema.Attribute.DefaultTo<'open'>;
+    submissions: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::submission.submission'
+    >;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -705,6 +709,43 @@ export interface ApiCompetitionCompetition extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+  };
+}
+
+export interface ApiComputeHostComputeHost extends Struct.CollectionTypeSchema {
+  collectionName: 'compute_hosts';
+  info: {
+    displayName: 'Compute Host';
+    pluralName: 'compute-hosts';
+    singularName: 'compute-host';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    gpuType: Schema.Attribute.String & Schema.Attribute.Required;
+    hostUser: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    hourlyRate: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    ipAddress: Schema.Attribute.String;
+    isAvailable: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::compute-host.compute-host'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    ram: Schema.Attribute.Integer & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    vram: Schema.Attribute.Integer & Schema.Attribute.Required;
   };
 }
 
@@ -1063,6 +1104,46 @@ export interface ApiMentorMentor extends Struct.CollectionTypeSchema {
     name: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     rate: Schema.Attribute.Decimal;
+    sessions: Schema.Attribute.Relation<'oneToMany', 'api::session.session'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiModelRegistryModelRegistry
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'model_registries';
+  info: {
+    displayName: 'Model Registry';
+    pluralName: 'model-registries';
+    singularName: 'model-registry';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    architecture: Schema.Attribute.String;
+    author: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    downloads: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    framework: Schema.Attribute.String & Schema.Attribute.Required;
+    isPublic: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    likes: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::model-registry.model-registry'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1287,6 +1368,79 @@ export interface ApiReferralReferral extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+  };
+}
+
+export interface ApiResearchPaperResearchPaper
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'research_papers';
+  info: {
+    displayName: 'Research Paper';
+    pluralName: 'research-papers';
+    singularName: 'research-paper';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    abstract: Schema.Attribute.Text & Schema.Attribute.Required;
+    arxivId: Schema.Attribute.String & Schema.Attribute.Required;
+    authors: Schema.Attribute.String & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::research-paper.research-paper'
+    > &
+      Schema.Attribute.Private;
+    pdfUrl: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    publishedDate: Schema.Attribute.Date;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiRlhfTaskRlhfTask extends Struct.CollectionTypeSchema {
+  collectionName: 'rlhf_tasks';
+  info: {
+    displayName: 'RLHF Task';
+    pluralName: 'rlhf-tasks';
+    singularName: 'rlhf-task';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    chosenModel: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    datasetType: Schema.Attribute.String;
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::rlhf-task.rlhf-task'
+    > &
+      Schema.Attribute.Private;
+    modelA_output: Schema.Attribute.Text;
+    modelB_output: Schema.Attribute.Text;
+    prompt: Schema.Attribute.Text;
+    publishedAt: Schema.Attribute.DateTime;
+    rewardPoints: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<10>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
   };
 }
 
@@ -2248,6 +2402,7 @@ declare module '@strapi/strapi' {
       'api::bounty.bounty': ApiBountyBounty;
       'api::code-snippet.code-snippet': ApiCodeSnippetCodeSnippet;
       'api::competition.competition': ApiCompetitionCompetition;
+      'api::compute-host.compute-host': ApiComputeHostComputeHost;
       'api::compute-instance.compute-instance': ApiComputeInstanceComputeInstance;
       'api::contact.contact': ApiContactContact;
       'api::course.course': ApiCourseCourse;
@@ -2259,6 +2414,7 @@ declare module '@strapi/strapi' {
       'api::lab.lab': ApiLabLab;
       'api::leaderboard-entry.leaderboard-entry': ApiLeaderboardEntryLeaderboardEntry;
       'api::mentor.mentor': ApiMentorMentor;
+      'api::model-registry.model-registry': ApiModelRegistryModelRegistry;
       'api::model.model': ApiModelModel;
       'api::notification.notification': ApiNotificationNotification;
       'api::organization.organization': ApiOrganizationOrganization;
@@ -2266,6 +2422,8 @@ declare module '@strapi/strapi' {
       'api::pipeline.pipeline': ApiPipelinePipeline;
       'api::profile.profile': ApiProfileProfile;
       'api::referral.referral': ApiReferralReferral;
+      'api::research-paper.research-paper': ApiResearchPaperResearchPaper;
+      'api::rlhf-task.rlhf-task': ApiRlhfTaskRlhfTask;
       'api::sandbox.sandbox': ApiSandboxSandbox;
       'api::session.session': ApiSessionSession;
       'api::showcase.showcase': ApiShowcaseShowcase;

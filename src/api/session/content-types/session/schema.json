@@ -16,7 +16,8 @@
     "mentor": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::mentor.mentor"
+      "target": "api::mentor.mentor",
+      "inversedBy": "sessions"
     },
     "date": {
       "type": "datetime"

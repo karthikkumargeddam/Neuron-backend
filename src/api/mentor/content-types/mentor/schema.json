@@ -24,6 +24,12 @@
     },
     "expertise": {
       "type": "string"
+    },
+    "sessions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::session.session",
+      "mappedBy": "mentor"
     }
   }
 }
